@@ -1,44 +1,55 @@
 <!DOCTYPE html >
 <html>
 <head>
-	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<title>PAF LIMS :: <%= params[:action].upcase %></title>
-	<%= stylesheet_link_tag "screen" %>
-	<%= javascript_include_tag :defaults %>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" >
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" >
+	<%= stylesheet_link_tag "application", :media => "all" %>
+	<%= javascript_include_tag "application"%>
 	<%= csrf_meta_tag %>
 </head>
-<body id="current">
-  <div id="logo">
-  <h1 align="center">PAF LIMS</h1> 
-  </div>
-<div id="nav">
-  <ul id="tabnav">
-    <li<%= ' class="current"' if controller.controller_name == 'dashboard' %>><%= link_to "Dashboard", :controller => "dashboard" %></li>
-    <li<%= ' class="current"' if controller.controller_name == 'projects' %>><%= link_to "Projects", :controller => "projects" %></li>
-    <li<%= ' class="current"' if controller.controller_name == 'experiments' %>><%= link_to "Experiments", :controller => "experiments" %></li>
-    <li<%= ' class="current"' if controller.controller_name == 'samples' %>><%= link_to "Samples", :controller => "samples" %></li>
-    <li<%= ' class="current"' if controller.controller_name == 'sample_origins' %>><%= link_to "Sample Origins", :controller => "sample_origins" %></li>
-    <li<%= ' class="current"' if controller.controller_name == 'organisms' %>><%= link_to "Organisms", :controller => "organisms" %></li>
-    <li<%= ' class="current"' if controller.controller_name == 'people' %>><%= link_to "Contacts", :controller => "people" %></li>
-    <li<%= ' class="current"' if controller.controller_name == 'help' %>><%= link_to "Help", :controller => "help" %></li>
+
+<body>
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+	  <span class="icon-bar">bar 1</span>
+	  <span class="icon-bar">bar 2</span>
+	  <span class="icon-bar">bar 3</span>
+	</a>
+	<a class="brand" href="#">PAF LIMS</a>
+        <div class="nav-collapse">
+	<ul class="nav">
+          <li<%= ' class="current"' if controller.controller_name == 'dashboard' %>><%= link_to "Dashboard", :controller => "dashboard" %></li>
+          <li<%= ' class="current"' if controller.controller_name == 'projects' %>><%= link_to "Projects", :controller => "projects" %></li>
+          <li<%= ' class="current"' if controller.controller_name == 'experiments' %>><%= link_to "Experiments", :controller => "experiments" %></li>
+          <li<%= ' class="current"' if controller.controller_name == 'samples' %>><%= link_to "Samples", :controller => "samples" %></li>
+          <li<%= ' class="current"' if controller.controller_name == 'sample_origins' %>><%= link_to "Sample Origins", :controller => "sample_origins" %></li>
+          <li<%= ' class="current"' if controller.controller_name == 'organisms' %>><%= link_to "Organisms", :controller => "organisms" %></li>
+          <li<%= ' class="current"' if controller.controller_name == 'people' %>><%= link_to "Contacts", :controller => "people" %></li>
+          <li<%= ' class="current"' if controller.controller_name == 'help' %>><%= link_to "Help", :controller => "help" %></li>
 		<% if request.env['SERVER_NAME'] =~ /pcib306.unil.ch/ %>	
-    <li<%= ' class="current"' if controller.controller_name == 'tools' %>><%= link_to "Tools", :controller => "tools" %></li>
+          <li<%= ' class="current"' if controller.controller_name == 'tools' %>><%= link_to "Tools", :controller => "tools" %></li>
 		<% end %>
-  </ul>
+	</ul>
+      </div>
+    </div>
+  </div>
 
-</div>
-<div id="wrapper">
-
+<div class="container">
+<div class="row">
+  <span class="span12">
 <%= content_tag 'div', h(flash[:notice]),
 	:class => 'notice', :id => 'notice'  if flash[:notice] %>
 <%= content_tag 'div', h(flash[:error]),
 	:class => 'error', :id => 'error' if flash[:error] %>
-
-
-<%= yield %>
-
+    <%= yield %>
+  </span>
 </div>
 
 	<div id="footer">PAF Lims v 1.5: released 29th July 2008<br/> &copy; 2005 - 2008; <a href="http://unil.ch/paf">Protein Analysis Facilty</a>, <a href="http://unil.ch">University of Lausanne</a>
+
+</div>
 </body>
 </html>
