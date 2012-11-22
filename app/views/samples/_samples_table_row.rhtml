@@ -1,0 +1,36 @@
+<tr class="<%= cycle("even", "odd") -%>">
+    <% if params[:page] -%>
+    	<td><%=h index+(10*(params[:page].to_i-1))+1 %></td>
+    <% else -%>
+			<td><%= index+1 %>
+		<% end %>
+    <td><%= sample.id%></td>
+    <td><%= sample.sample_name %>
+			<div style="font-size: x-small; color: #885;">
+				<% if not sample.experiment.nil? %>
+					<%= sample.experiment.hypothesis %> 
+				<% else %>
+					Orphan; doesn't belong to an experiment!
+				<% end %>
+			</div>
+		</td>
+    <td><%=h sample.sample_date.strftime( "%d-%m-%Y" ) %></td>
+		<td><%=h sample.provider %></td> 
+		<td><%=h sample.description %></td> 		
+    <td><%=h sample.annotation %></td>
+    <td><% if not sample.stain == "0" %><%=h sample.stain %><%end%></td>
+    <td><% if not sample.analysis_type == "0" %><%=h sample.analysis_type %><%end%></td>
+    <td><%=h sample.bill_done.nil? ? '' : sample.bill_done.upcase %></td>
+		<% if not sample.mascot_search_results.nil? %>
+		<td><%= sample.mascot_search_results.split(',').collect { |f| f=~/F0(\d+)/; "<a href='#{f}'>#{$1}</a> " } %></td>
+		<% else %>
+		<td>&nbsp;</td>
+		<% end %>
+    <td><%= link_to( image_tag('edit.gif', :border => 0), :action => 'edit', :id => sample ) %> &nbsp;
+    <%= link_to (image_tag('trash.gif', :border => 0),  {:action => 'destroy', :id => sample}, :confirm => "Are you sure?") %> </td>		
+<!-->
+    <td><%= link_to 'Edit', :action => 'edit', :id => sample %> &nbsp;
+    <%= link_to 'Destroy', {:action => 'destroy', :id => sample}, :confirm => "Are you sure?" %></td>
+-->
+  </tr>
+

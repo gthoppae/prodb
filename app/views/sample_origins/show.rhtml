@@ -1,0 +1,50 @@
+<h1>Showing sample origin <%= @sample_origin.id %></h1>
+
+<div id="block">
+<table> 
+  
+	<tr><td width="20%" class="label-td">ID:</td>
+		<td><%= @sample_origin.id %>
+	</tr>
+
+	<tr><td width="20%" class="label-td">Organism:</td>
+	<td>
+	<%= link_to @sample_origin.organism.species_name, :action => 'show', :controller => 'organisms', :id => @sample_origin.organism %></td></tr>
+
+	<tr><td class="label-td">Description:</td>
+		<td><%= @sample_origin.description %></td>
+	</tr>
+
+	<tr><td class="label-td">Condition:</td>
+		<td><%= @sample_origin.condition %></td>
+	</tr>
+
+	<tr><td class="label-td">Environment:</td>
+		<td><%= @sample_origin.environment %></td>
+	</tr>
+
+		<tr><td class="label-td">Tissue Type:</td>
+		<td><%= @sample_origin.tissue_type %></td></tr>
+
+	<tr><td class="label-td">Cell Type:</td>
+		<td><%= @sample_origin.cell_type %></td>
+	</tr>
+
+	<tr><td class="label-td">Cell Cyle Phase:</td>
+		<td><%= @sample_origin.cell_cycle_phase %></td>
+	</tr>
+
+	<tr><td class="label-td">Technique:</td>
+		<td><%= @sample_origin.technique %></td>
+	</tr>
+
+	<tr><td class="label-td">Metabolic Label:</td>
+		<td><%= @sample_origin.metabolic_label %></td>
+	</tr>
+
+	<tr>
+		<td colspan="2" class="right"><%= link_to 'Edit', :action => 'edit', :id => @sample_origin %> &nbsp;
+    <%= link_to 'Destroy', {:action => 'destroy', :id => @sample_origin}, :confirm => "Are you sure?" %></td>
+  </tr>
+</table>
+

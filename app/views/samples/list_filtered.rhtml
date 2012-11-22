@@ -1,0 +1,27 @@
+<script>
+	<% if params[:sample][:provider].nil? %>
+	$('pagination').show();
+	<% else %>
+	$('pagination').hide();
+	<% end %>
+</script>
+
+<% if @samples.length.zero? %>
+	No hits found for the query <%= params[:sample][:provider] %>
+<% else %>
+<% @samples.group_by(&:experiment).keys.each_with_index do |e, i| %>
+
+		<br/>
+		<div style="font-weight: bold">Experiment <%= i+1 %>: <%= e.hypothesis.nil? ? '-' : link_to(e.hypothesis, "experiments/show/#{e.id}")%></div>
+		<br/>
+		
+		<div style="margin-left: 20px;" id="samples_table_<%= i %>">
+			<%= render 	:partial => 'list_filtered_samples_table',
+									:locals => { :experiment => e} %>
+		</div>
+
+
+<% end %>
+
+<% end %>
+

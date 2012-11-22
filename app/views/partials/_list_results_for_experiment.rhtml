@@ -1,0 +1,37 @@
+<table class="table-with-border" cellpadding="4" cellspacing="0" width="100%"> 
+	<tr class="header">
+		<th>Source</th>
+		<th>File</th>
+		<th>Created on</th>
+		<th>Description</th>		
+<% if @controller.controller_name == "experiments" -%>
+	  <th colspan="2">&nbsp;</th>
+<% end %>
+	</tr>
+
+	<% @experiment.uploads.each_with_index do | u, index| %>
+		<tr<%= ' class="odd"' if index %2 == 1 %>>
+			<td><%= u.tags.collect { |t| t.name } %></td>
+			<td width="50%">
+				<%= show_icon( u.content_type ) -%>
+				<a href="/uploads/get_file/<%=  u.id %>"><%=  u.filename %></a>
+				<span style="font-size: x-small; color: #885;">
+					<%= number_to_human_size(  u.size ) -%>,
+					<%= time_ago_in_words u.created_on -%> ago
+
+				</span>
+			</td>
+			<td width="10%"><%= u.created_on.strftime('%d-%m-%Y') -%></td>
+			<td width="30%"><%=  u.description %></td>			
+<% if @controller.controller_name == "experiments" -%>
+    	<td width="6%">
+				<%= link_to( image_tag('edit.gif', :border => 0), :action => 'edit', :id => u, :controller => 'uploads') %> &nbsp;
+				<%= link_to (image_tag('trash.gif', :border => 0),  {:action => 'destroy', :controller => 'uploads', :id =>  u.id}, :confirm => "Are you sure?") %> 
+			</td>
+<% end %>
+		</tr>
+	<% end %>
+
+</table>
+
+<br/>

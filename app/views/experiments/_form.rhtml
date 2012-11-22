@@ -1,0 +1,15 @@
+<%= error_messages_for 'experiment' %>
+
+<!--[form:experiment]-->
+<p><label for="project_id">Experiment belongs to project</label><br/>
+<%= select("experiment", "project_id", Project.find(:all, :order => 'name').collect {|p| [p.name, p.id] }) %>
+&nbsp; <a href="/projects/list">Projects</a>
+</p>
+<p><label for="experiment_hypothesis">Hypothesis</label><br/>
+<%= text_field 'experiment', 'hypothesis'  %></p>
+
+<p><label for="experiment_annotation">Annotation</label><br/>
+<%= text_field 'experiment', 'annotation'  %></p>
+
+<!--[eoform:experiment]-->
+

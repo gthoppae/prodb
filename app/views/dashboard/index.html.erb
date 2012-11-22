@@ -1,0 +1,18 @@
+<center>
+<h1>Dashboard</h1>
+A quick look at how the database is shaping...<br/>
+<br/>
+<table border="1">
+<tr><th>Number of Projects</th><td><%= @d.no_of_projects %></td></tr>
+<tr><th>Number of Experiments</th><td><%= @d.no_of_experiments %></td></tr>
+<tr><th>Number of Uploads</th><td><%= @d.no_of_uploads %></td></tr>
+<tr><th>Number of Samples</th><td><%= @d.no_of_samples %></td></tr>
+<% if not @largest_experiment.nil? %>
+<tr><th>Largest Experiment</th><td><%= link_to(@largest_experiment.hypothesis, :controller => "experiments", :action => "show", :id => @largest_experiment.id) %> with <%= @largest_experiment.samples.length %> samples</td></tr>
+<% end %>
+
+</table>
+
+<br/>
+
+</center>

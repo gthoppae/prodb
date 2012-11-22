@@ -1,0 +1,25 @@
+<html>
+<head>
+  <title><%= @title %> <%= controller.action_name %></title>
+  <%= stylesheet_link_tag 'screen.css' %>
+</head>
+<body>
+<div id="navigation">
+<div id="logo">PAF LIMS</div>
+	<ul>
+		<li><a href="/projects">Projects</a></li>
+		<li class="current"><a href="/experiments">Experiments</a></li>
+		<li><a href="/samples">Samples</a></li>
+		<li><a href="/results">Results</a></li>
+	</ul>
+</div>
+<div id="wrapper">
+
+<div id="main">
+<%= @content_for_layout %>
+</div>
+
+</div>
+
+</body>
+</html>

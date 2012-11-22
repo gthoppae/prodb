@@ -1,0 +1,3 @@
+page.replace_html "result", "<p>#{@unescaped_text}</p>"
+page.visual_effect :highlight, 'result', { :duration => 2.0 }
+page.show 'result-box'

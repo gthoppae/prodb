@@ -1,0 +1,43 @@
+<div id="import" style="font-size: small;  display: none;background-color: #ddd; margin: 5px; color: #333;" > 
+
+	<br/>
+
+	<h2 align="center">Import samples</h2>
+
+	<div style="margin-left: auto; margin-right: auto; padding: 20px; margin-top: 10px; border: 2px solid #bbb;; background: #eee; width: 90%; ">
+	<% form_for( :upload, :url => {:action => 'import', :controller => 'samples'} ) do |f| %>
+	<%= hidden_field :experiment, :id %>
+	<table style="font-size: small;">
+		<tr>
+			<td>
+				1. Use a Microsoft Excel template (<a href="/SAMPLE_LIST_260308.xls">SAMPLE_LIST_260308.xls</a>) to populate a list of samples, then copy and paste the same in the following text area.<br/>
+
+					<%= text_area( :samples, 'import', {:rows=>8, :cols=>100, :style => 'font-size: small'} ) %>
+
+			</td>
+		</tr>
+		<!-- check -->
+		<tr>
+
+			<td>
+
+			2. Choose the format of the data:	<input type="radio" id="format_tab" name="format" value="tab" checked="checked" /> Tab separated or
+											<input type="radio" id="format_csv" name="format" value="csv"/> Comma separated (CSV)
+									<br/>
+
+				<div id="check" style="margin: 10px 0px; padding: 5px;">
+				</div>
+
+			3. <%= button_to_function( 'Verify', 'verifyImportData()', :id => 'verify' ) %><span id="import_btn" style="display:none">
+					and if all is OK click <%= submit_tag( 'Import' ) %></span>
+			</td>
+	</table>
+	<% end %>
+
+	</div>
+
+<div style="padding: 5px; margin-left: auto; margin-right: auto; text-align: center">
+	<input type="button" onclick="new Effect.BlindUp('import');" value=" Cancel" />
+</div>
+
+</div>

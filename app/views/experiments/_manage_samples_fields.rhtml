@@ -1,0 +1,18 @@
+<tr style="background: #ccc; border-bottom: 1px solid #bbb">
+	<td>&nbsp;</td>
+	<td>&nbsp;</td>
+	<td><%= text_field 'sample', 'sample_name', {:size => 10} %></td>
+	<td>&nbsp;</td>
+	<td><%= text_field 'sample', 'sample_date', {:size => 10} %></td>
+	<!-- <td>&nbsp;</td> -->
+	<td><%= select("sample", "provider", Person.find( :all, :order => 'last_name').collect { |n| [n.last_name, n.id] }, :include_blank => true ) %> </td>
+	<td><%= text_field 'sample', 'description', {:size => 10} %></td>
+	<td><%= text_field 'sample', 'annotation', {:size => 10} %></td>
+	<td><%= select  'sample', 'stain', ['', 'CBB', 'SS', 'SYPRO', 'DIGE']  %></td>
+	<td><%= select  'sample', 'analysis_type', ['', 'MALDI', 'LC', 'LC-MS', '2D-Gel']  %></td>
+	<td><%= select 'sample', 'bill_done', ['', 'Y','N','NA'] %>     
+	<td><%= text_field 'sample', 'mascot', {:size => 10} %></td>
+	<td colspan="2">
+		<%= submit_tag("Update", :name => "submit", :id => 'update_btn', :disabled => true, :style => "font-size: x-small; background-color: #ddd; border: 1px solid #aaa;") %> <br/>
+		<%= submit_tag("Delete", :name => "submit", :id => 'destroy_multiple_btn', :disabled => true, :style => "font-size: x-small; background-color: #ddd; border: 1px solid #aaa;") %> 
+</tr>

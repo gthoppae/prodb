@@ -1,0 +1,18 @@
+
+
+<% @samples.group_by(&:experiment).keys.each_with_index do |e, i| %>
+
+	<div>
+		<%= e.hypothesis %>
+	</div>
+
+	<% e.samples.each do |s| %>
+	<div style="background-color: #9c9;">
+		<span style="margin-left: 5px;"><%= s.id %></span>
+		<span style="margin-left: 5px;"><%= s.sample_date.strftime( '%d-%m-%Y' ) %></span>
+		<span style="margin-left: 5px;"><%= s.sample_name %></span>
+		<span style="margin-left: 70px;"><%= s.description %></span>
+	</div>
+	<% end %>
+
+<% end %>

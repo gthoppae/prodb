@@ -1,0 +1,10 @@
+
+<%= render :partial => 'pages_nav' %>
+
+<% @projects.each do |p| %>
+	<div style="border: 1px solid #bbb; background-color: #eee; padding: 5px; margin: 5px; width: 130px; float: left;"> 
+		<p style="min-height: 40px; margin: 2px;"><%= link_to p.name, p.id %></p>
+		<p style="font-size: x-small;">Created on: <%= p.created_on.strftime("%d %b, %y")%></p>
+		<p style="font-size: x-small;"># of exps: <%= p.experiments.count %></p>
+	</div>
+<% end %>

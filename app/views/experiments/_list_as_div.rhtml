@@ -1,0 +1,45 @@
+<div id="experiments-table">
+
+<div>
+
+<% @experiments.each_with_index do |experiment, index| %>
+  <div<%= ' class="odd"' if index%2 == 0 %> style="padding:5px; border-bottom: 1px solid #000;">
+		
+		<div style="float: left; margin: 5px; margin-bottom: 20px; margin-top: 0;">
+		<% if params[:page] -%>
+		  <div style="margin-top: 0;"><%=h index+(20*(params[:page].to_i-1))+1 %>) </div>
+		<% else -%>
+		  <div style="margin-top: 0;" ><%=h index+1 %></div>
+		<% end -%>
+		</div>
+
+		<div style="float: right; background-color: #dd9; margin-top: 0; width: 200px; padding: 5px; text-align: right;">
+			<div style="font-weight: bold;"><%= experiment.human_created_on %></div>
+    	<%= link_to( image_tag('edit.gif', :border => 0), :action => 'edit', :id => experiment, :controller => 'experiments') %> &nbsp;
+    	<%= link_to( image_tag('trash.gif', :border => 0), {:action => 'destroy', :id => experiment, :controller => 'experiments'}, :confirm => 'Are you sure?') %> 
+		</div>
+
+
+    <div>
+			<%= link_to experiment.hypothesis, :id => experiment.id, :action => "show" %>
+			<span style="margin-right: 30px; margin-left: 7px; font-style: italic; font-size: x-small;">Hypothesis</span>
+
+		  <a  href="/projects/show/<%=h experiment.project.id %>"><%=h experiment.project.name %></a>
+			<span style="margin-right: 30px; margin-left: 10px; font-style: italic; font-size: x-small;">Project</span>
+		</div>
+
+
+		<br/>
+		<span style="margin-top: 5px; font-style: italic; font-size: x-small;">Annotation</span>
+    <span style="background-color: #fff; padding: 5px;"><%=h experiment.annotation %></span><br/><br/>
+
+		<!-- 
+		<div><% if not experiment.samples[0].nil? %><%= experiment.samples[0].analysis_type %><% end %></div>
+
+		-->
+
+  </div>
+<% end %>
+</div>
+
+</div> 

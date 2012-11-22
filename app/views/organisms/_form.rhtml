@@ -1,0 +1,22 @@
+<%= error_messages_for 'organism' %>
+
+<!--[form:organism]-->
+<p><label for="organism_species_name">Species name</label><br/>
+<%= text_field 'organism', 'species_name'  %></p>
+
+<p><label for="organism_strain_identifier">Strain identifier</label><br/>
+<%= text_field 'organism', 'strain_identifier'  %></p>
+
+<p><label for="organism_relevant_genotype">Relevant genotype</label><br/>
+<%= text_field 'organism', 'relevant_genotype'  %></p>
+
+<p><label for="organism_annotation">Annotation</label><br/>
+<%= text_field 'organism', 'annotation'  %></p>
+
+<p><label for="organism_created_on">Created on</label><br/>
+<%= datetime_select 'organism', 'created_on'  %></p>
+
+<p><label for="organism_updated_on">Updated on</label><br/>
+<%= datetime_select 'organism', 'updated_on'  %></p>
+<!--[eoform:organism]-->
+

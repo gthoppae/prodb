@@ -1,0 +1,12 @@
+<tr>
+	<td><%= form_tag :action => 'save_with_ajax', :controller => 'samples' %>
+		<%=text_field( "sample", "sample_name" ) %></td>
+	<td><%=text_field( "sample", "sample_date" ) %></td>
+	<td><%=text_field( "sample", "provider" ) %></td>
+	<td><%=text_field( "sample", "annotation" ) %></td>
+	<td><%=text_field( "sample", "stain" ) %></td>
+	<td><%=text_field( "sample", "analysis_type" ) %></td>
+	<td><%=text_field( "sample", "bill_done" ) %></td>
+	<td><%=text_field( "sample", "mascot_search_results" ) %></td>
+	<td><%= submit_tag :value => "save" %></form></td>
+</tr>

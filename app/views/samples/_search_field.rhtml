@@ -1,0 +1,15 @@
+<div class="search_field" style="padding-top: 5px;">
+AND &nbsp;
+	<select id="search_field" name="field">
+                <%= options_for_select( [
+                                    ['Sample Provider', 'provider']
+                                   ] ) %>
+	</select>
+  for text:: <%= text_field_tag("keyword") -%>
+	
+	<!--
+	link_to_function( image_tag('silk_icons/delete.png', {:border => 'none' }), "$(this).up('.search_field').remove()") 
+	-->
+
+</div>
+

@@ -1,0 +1,8 @@
+<h1>Editing sample_origin</h1>
+
+<% form_for :sample_orign, @sample_origin, :url => {:action => 'update', :id => @sample_origin} do |f| %>
+  <%= render :partial => "form", :locals => { :f => f} %>
+  <%= submit_tag "Edit" %>
+<% end %>
+
+<%= link_to 'Back', :action => 'list' %>

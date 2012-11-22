@@ -1,0 +1,7 @@
+<h1>Editing contact</h1>
+
+<% form_for :person, @person, :url => {:action => 'update', :id => @person} do |f|  %>
+<%= render :partial => "form", :locals => {:f => f}  %>
+<center><%= submit_tag( "Update contact" ) %></center>
+<% end %>
+

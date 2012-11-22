@@ -1,0 +1,96 @@
+<!-- box for experiment -->
+<div style="border: 1px solid #bbb; padding: 10px; margin-top: 10px; background: <%= @background %>;">
+
+<!-- begin experiment -->
+<div id="box">
+    <% if @controller.controller_name == "projects" -%>
+		<h2><a href="/experiments/show/<%= @experiment.id %>">Experiment No: <%= @i+1 %></a></h2>
+		<% else -%>
+		<h2>Experiment
+			<%= link_to image_tag('edit.gif', :border => 0), "/experiments/edit/#{@experiment.id}"  %>
+		</h2>
+		<% end -%>
+
+
+<table> 
+	<tr><td><span class="label-td">Experiment ID:</span> <%= @experiment.id %>
+	</td></tr>
+	<tr><td><span class="label-td">Hypothesis:</span>
+	<%= @experiment.hypothesis %></tr>
+	<tr><td><span class="label-td">Annotation:</span>
+	<%= @experiment.annotation %></tr>
+	<tr><td><span class="label-td">Created on</span>
+	<%= @experiment.human_created_on %></tr>
+</table>
+</div>
+<!-- end experiment -->
+
+
+<!-- begin samples -->
+<div id="box">
+
+<h1>Samples</h1>
+
+
+
+
+<% if not @experiment.samples.empty? 	%>
+	<%= form_tag( '/samples/update_multiple', :method => 'post', :id => 'manage_samples_form'  ) %>
+	<%= hidden_field "experiment", "id" %>
+	<h3>You have selected <span id="selected_samples_no">0 samples</span></h3>
+
+	<%= render :partial => "list_samples_for_experiment", :locals => { :experiment => @experiment } %>
+
+	</form>
+
+
+<% else %>
+	No samples found for this experiment.
+  <br/>
+  <br/>
+<% end %>
+
+<br/>
+
+<% if @controller.controller_name == "experiments" -%>
+
+<input type="button" value="Create a new Sample" onClick="window.location='/samples/new/<%= params['id'] %>';"/> or 
+<input type="button" onclick="new Effect.BlindDown('import');" value=" Import multiple samples" /></td> 
+<%= render :partial => "partials/import_form" %>
+
+<% end -%>
+
+</div>
+<!-- end samples -->
+
+<br/>
+
+<!-- begin results -->
+<div id="box">
+
+<h2>Results and associated files</h2>
+	<% if not @experiment.uploads.empty? 	%>
+		<%= render :partial => "partials/list_results_for_experiment" %>
+	<% else %>
+		<div id="error">None found for this experiment.</div>
+		<br/>
+	<% end %>
+
+<% if @controller.controller_name == "experiments" -%>
+		<input type="button" value="New Result" onClick="Effect.BlindDown('upload');">
+		<div id="upload" style="display: none;">
+		<h1 align="center">Upload experimental results</h1>
+		<% @upload = Upload.new %>
+		<%= render :partial => "partials/upload_form" %>
+
+		<br/>
+		<center><input type="button" onclick="new Effect.BlindUp('upload');" value=" Cancel" /></td></center>
+
+		</div>
+<% end -%>
+</div>
+<!-- end results -->
+
+</div>
+<!-- end box for experiment -->
+

@@ -1,0 +1,51 @@
+
+<% if @people.length == 0 -%>
+
+<font size=+1><%= image_tag("alert-ora.gif") %> Cannot find any contact with the lastname starting with <b><%= params['starts_with'].chop %></b>!</font>
+ &nbsp; <a href="/people/new">Add a new contact</a>
+
+<% end -%>
+
+<h1>Contacts</h1>
+
+<a href="/people/new">New contact</a>
+<br/>
+<br/>
+
+Display people's last names starting with: <%= alphabet_links %>
+
+
+<br/>
+<br/>
+
+<% @people.each_with_index { |p, i| -%>
+<table border="0" class="table-with-border" width="55%" bgcolor="#eee">
+<tr><td> 
+	<b><%= p.last_name -%>, <%= p.first_name -%></b> (E-mail: <%= mail_to( p.email ) %>)<br/>
+	</td>
+</tr>
+
+<tr>
+  <td>Address:<br/><pre><%= p.address %></pre></td>
+</tr>
+
+<tr>
+	<td>Phone: <%= p.phone %>, Fax: <%= p.fax %></td>
+</tr>
+
+<tr>
+	<td> 
+		<form action="/people/edit/<%= p.id %>" method="post">
+		<%= submit_tag( "Edit" ) %>
+		<%= link_to("Delete", {:action => 'destroy', :id => p }, :confirm => 'Are you sure you want to delete the contact?') %>
+		</form>
+		</td>
+</tr>
+</table>
+<br/>
+<% } -%>
+
+
+<br/>
+<br/>
+

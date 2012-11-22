@@ -1,0 +1,110 @@
+<%= error_messages_for 'sample' %>
+
+<!--[form:sample]-->
+<input type='hidden' name='prev_loc' value='<%= @prev_loc %>'/>
+
+<p><label for="experiment">Experiment</label><br/>
+
+<select name="sample[experiment_id]">
+<% Experiment.find(:all).collect { |e| -%>
+<% if e.id == @experiment.id -%>
+<option selected value="<%= e.id %>"><%= e.hypothesis %></option>
+<% else -%>
+<option value="<%= e.id %>"><%= e.hypothesis %></option>
+<% end -%>
+<% } -%>
+</select>
+
+<% select( "sample", "experiment_id", Experiment.find(:all).collect{ |e| [e.hypothesis, e.id] }, {"selected" => @experiment.hypothesis}, {} ) %>
+<a href="/experiments/list">Experiments</a>
+</p>
+
+<p><label for="sample_origin">Sample origin</label><br/>
+<%= select("sample", "sample_origin_id", SampleOrigin.find(:all).collect {|s| [s.description, s.id] }) %>
+<a href="/sample_origins/list">Sample origins</a>
+</p>
+
+
+<p><label for="sample_sample_name">Sample name</label><br/>
+<%= f.text_field 'sample_name'  %></p>
+
+<p><label for="sample_sample_date">Sample date</label><br/>
+<%= datetime_select 'sample', 'sample_date'  %></p>
+
+<p><label for="sample_provider">Provider: </label>
+
+
+<% if Person.find_by_last_name(@sample.provider.downcase).nil? -%>
+	<% if @sample.provider.empty? %>
+	<% else -%>
+		<font color="red">'<%= @sample.provider %>' is not found in Contacts table.</font>  	
+	<% end -%>
+		<%= link_to("Add #{@sample.provider}", :controller=>'people', :action=>'add', :id => "#{@sample.provider}") %> or choose one of the known providers:
+<select name="sample[provider]"><%= options_for_select( Person.find( :all, :order => 'last_name' ).collect { |n| [n.last_name] } ) %></select>
+<% else -%>
+<%= select("sample", "provider", Person.find( :all, :order => 'last_name').collect { |n| [n.last_name] } ) %>
+
+<% end -%>
+</p>
+
+<p><label for="sample_enriched_for">Enriched for</label><br/>
+<%= f.text_field 'enriched_for'  %></p>
+
+<p><label for="sample_description">Description</label><br/>
+<%= f.text_field 'description'  %></p>
+
+<p><label for="sample_annotation">Annotation</label><br/>
+<%= f.text_field 'annotation'  %></p>
+
+<p><label for="sample_stain">Stain</label><br/>
+<%= f.select  'stain', ['CBB', 'SS', 'SYPRO', 'DIGE']  %></p>
+
+<p><label for="sample_analysis_type">Analysis type</label><br/>
+<%= f.select  'analysis_type', ['MALDI', 'LC', 'LC-MS', '2D-Gel']  %></p>
+
+<p><label for="sample_bill_done">Bill done</label><br/>
+<select id="sample_bill_done" name="sample[bill_done]">
+<% if @sample.bill_done == 'n' %>
+  <option value="n" selected>N</option>
+  <option value="y">Y</option>
+  <option value="n">NA</option>
+<% elsif @sample.bill_done == 'y' %>
+  <option value="n">N</option>
+  <option value="y" selected>Y</option>
+  <option value="n">NA</option>
+<% else  %>
+  <option value="n">N</option>
+  <option value="y">Y</option>
+  <option value="n" selected>NA</option>
+<% end %>
+</select>
+
+<br/>
+
+<div id="mascot_search_results" style="border: 1px solid #ddd; padding: 5px;">
+<p><label for="sample_mascot_search_result">Mascot Search Results</label>
+
+<p>Please enter the absolute link (URI) to your mascot search log. For ex:</p>
+
+<p style="font-style: italic; font-size: 10pt; background-color: #bbb; padding: 5px;" > http://mascot.server.com/mascot/cgi/master_results.pl?file=../data/20080101/F123456.dat</p>
+
+<% if @sample.new_record? %>
+		<%= render :partial => "mascot_form" , :locals => { :m =>  '' }%>
+<% else %>
+	<% if (not @sample.mascot_search_results.nil?) and (not @sample.mascot_search_results.empty?)  %>
+		<% @sample.mascot_search_results.split(",").each do |e| %>
+			<%= render :partial => "mascot_form" , :locals => { :m => e }%>
+		<% end %>
+	<% else %>
+		<%= render :partial => "mascot_form" , :locals => { :m =>  '' }%>
+	<% end %>	
+<% end %>
+</div>
+<p><%= link_to_function "Add another mascot search result"  do |page| 
+      page.insert_html :bottom, :mascot_search_results, :partial => 'mascot_form'
+       end %>  
+</p>
+
+<br/>
+
+<!--[eoform:sample]-->

@@ -1,0 +1,19 @@
+<div style="padding: 2px; margin: 4px; text-align: center">
+	<h2>Add sequence(s) to <i>custom</i> database</h2>
+		[<%= link_to "back to sequence viewer", :action => "seq_viewer" -%>]
+	<p style="border: 1px solid #bbb; padding: 5px; text-align: left; margin-left: 20%; margin-right: 20%">You can add one or many fasta formatted sequences like this:<br/><br/>
+	>test1<br/>
+	seq1<br/>
+	>test2<br/>
+	seq2<br/>
+	>test3<br/>
+	>seq3<br/>
+	</p>
+	<form action="/tools/seq_editor" method="post">
+		<input type="hidden" name="dbname" value="<%= @dbname %>"/>
+		<input type="hidden" name="dbfile" value="<%= @dbfile %>"/>
+	<textarea name="sequences" cols="70" wordwrap="true" rows="20"></textarea>
+	<br/>
+	<input type="submit" value="Update"/>
+	</form>
+</div>

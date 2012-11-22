@@ -1,0 +1,32 @@
+
+<h2>Import</h2>
+<div id="import_form" style="padding-top: 30px; text-align: center">
+
+	<%form_for 'samples', :url => { :action => 'import_samples' } do |s|%>
+		<%= hidden_field  'experiment', 'id' %>
+		Experiment: <%= @experiment.hypothesis %> (<%= @experiment.project.name %>) <br/>
+		<%= s.text_area 'samples', { :cols => '95%'} %><br/>
+		<%= submit_tag  'Import', { :style => 'margin-top: 20px;'} %>
+	<% end %>
+	
+</div>
+
+<br/>
+
+<table id="import_table" class="table-with-border" border="0" cellspacing="0" cellpadding="5" align="center">
+	<thead>
+	<tr class="header">
+		<th>Sample name</th>
+		<th>Date</th>
+		<th>Provider</th>
+		<th>Description</th>
+		<th>Annotation</th>
+		<th>Stain</th>
+		<th>Analysis type</th>
+		<th>Bill done</th>
+		<th>Mascot</th>
+	</tr>
+	</thead>
+
+</table>
+

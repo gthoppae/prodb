@@ -1,0 +1,9 @@
+<h1>Editing project</h1>
+
+
+<% form_for :project, @project, :url => { :action => 'update', :id => @project  } do |f| %>
+   <%= render_partial "form", :locals =>  { :f => f } %>
+   <%= submit_tag "Update"  %>
+<% end %>
+
+<%= link_to 'Back', :action => 'list' %>

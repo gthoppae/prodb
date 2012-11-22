@@ -1,0 +1,25 @@
+
+<table id="projects-list" border="0">
+  <tr>
+	 <th class="left" style="border-bottom:2px solid #FFF">No</th>
+		<th>Project name</th>
+		<th>Created on</th>
+	<th colspan="3">&nbsp;</th>
+  </tr>
+  
+<% for project in @projects %>
+  <tr>
+		<td><%=h project.id %></td>
+		<td><%=h project.name %></td>
+    <td class="centered"><%=h project.created_on%></td>
+    <td colspan="3">
+    <%= link_to 'Edit', :action => 'edit', :id => project%> &nbsp;
+    <%= link_to 'Destroy', {:action => 'destroy', :id => project}, :confirm => "Are you sure?" %></td>
+  </tr>
+<% end %>
+	<tr><td colspan="5"><hr class="bottom"></td></tr>
+</table>
+
+<%= link_to "Previous page", { :page => @project_pages.current.previous } if @project_pages.current.previous %>
+<%= link_to "Next page", { :page => @project_pages.current.next } if @project_pages.current.next %> 
+

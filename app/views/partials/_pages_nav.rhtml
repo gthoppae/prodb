@@ -1,0 +1,12 @@
+
+Pages: <% (1..(Sample.count.to_i/20.0).ceil.to_i).to_a.each do |i| %>
+	<% if params[:page] and params[:page].to_i == i -%>
+		<span class="current-page">
+			<a href="/<%= c %>?page=<%= i -%>"><%= i -%></a>
+		</span>&nbsp;
+	<% else -%>
+		<span class="pages">
+			<a href="/<%= c %>?page=<%= i -%>"><%= i -%></a>
+		</span>&nbsp;
+	<% end %>
+<% end %>

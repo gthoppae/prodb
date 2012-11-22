@@ -1,0 +1,81 @@
+
+<% if @sample_origins.length == 0 %>
+
+	<h4>No sample origins are found in the database. <%= link_to "Create one", :action => 'new' %></h4>
+
+<% else %>
+
+<h1>Listing Sample Origins</h1>
+
+<div id="actions">
+Actions: <%= link_to 'New sample origin', :action => 'new' %>
+</div>
+
+<br/>
+
+
+<div id="pages_nav">
+<center>
+Pages:
+
+<% (1..(SampleOrigin.count.to_i/20.0).ceil.to_i).to_a.each do |i| %>
+  <% if params[:page] and params[:page].to_i == i -%>
+    <span class="current-page">
+      <a href="/sample_origins?page=<%= i -%>"><%= i -%></a>
+    </span>&nbsp;
+  <% else -%>
+    <span class="pages">
+      <a href="/sample_origins?page=<%= i -%>"><%= i -%></a>
+    </span>&nbsp;
+  <% end %>
+<% end %>
+</center>
+
+</div>
+
+<br/>
+
+<table class="table-with-border" border='0' cellpadding="4" cellspacing="0" align="center">
+
+  <tr class="header">
+		<th>ID</th>
+		<th>Organism</th>
+		<th>Description</th>
+		<th>Condition</th>
+		<th>Tissue Type</th>
+		<th>Cell Type</th>
+		<th>Cell cycle phase</th>
+		<th>Technique</th>
+		<th>&nbsp;</th>
+	</tr>
+
+<% @sample_origins.each_with_index do |so, index| %>
+
+		<tr<%= ' class="odd"' if index%2 == 1 %>>
+		
+		<td><a href="/sample_origins/show/<%= so.id %>"><%= so.id %></a></td>
+		<td><%= link_to so.organism.species_name, :id => so.organism.id, :action=> "show", :controller => "organisms" %>
+		<td><%= so.description %></td>
+		<td><%= so.condition %></td>
+		<td><%= so.tissue_type %></td>
+		<td><%= so.cell_type %></td>
+		<td><%= so.cell_cycle_phase%></td>
+		<td><%= so.technique%></td>
+    <td><%= link_to( image_tag('edit.gif', :border => 0), :action => 'edit', :id => so ) %> &nbsp;
+    <%= link_to (image_tag('trash.gif', :border => 0),  {:action => 'destroy', :id => so}, :confirm => "Are you sure?") %> </td>
+	</tr>
+
+<%end %>
+
+</table>
+
+<br/>
+
+
+<br />
+
+<div id="actions">
+Actions: <%= link_to 'New sample origin', :action => 'new' %>
+</div>
+
+<% end %>

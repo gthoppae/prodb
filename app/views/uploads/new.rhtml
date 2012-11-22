@@ -1,0 +1,19 @@
+<h1>Upload#new</h1>
+<%= error_messages_for 'upload' %>
+<%= form_tag( {:action => 'new'}, :multipart => true ) %>
+<table>
+	<tr>
+		<td>File</td>
+		<td><%= file_field(:upload, 'file') %></td>
+	</tr>
+	<tr>
+		<td>Description:</td>
+		<td><%= text_area( :upload, 'description', {:rows => 8, :cols => 40} ) %></td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><%= submit_tag('New upload') %></td>
+	</tr>
+</table>
+
+<%= end_form_tag %>

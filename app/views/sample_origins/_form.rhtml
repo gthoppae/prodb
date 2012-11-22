@@ -1,0 +1,39 @@
+<%= error_messages_for 'sample_origin' %>
+
+<!--[form:sample_origin]-->
+<p><label for="organism">Organism</label><br/>
+<%= select("sample_origin", "organism_id", Organism.find(:all).collect {|p| [p.species_name + " strain: #{p.strain_identifier} genotype: #{p.relevant_genotype}", p.id] }) %>
+<a href="/organisms/list">Organisms</a>
+</p>
+
+<p><label for="sample_origin_description">Description</label><br/>
+<%= text_field 'sample_origin', 'description'  %></p>
+
+<p><label for="sample_origin_condition">Condition</label><br/>
+<%= text_field 'sample_origin', 'condition'  %></p>
+
+<p><label for="sample_origin_environment">Environment</label><br/>
+<%= text_field 'sample_origin', 'environment'  %></p>
+
+<p><label for="sample_origin_tissue_type">Tissue type</label><br/>
+<%= text_field 'sample_origin', 'tissue_type'  %></p>
+
+<p><label for="sample_origin_cell_type">Cell type</label><br/>
+<%= text_field 'sample_origin', 'cell_type'  %></p>
+
+<p><label for="sample_origin_cell_cycle_phase">Cell cycle phase</label><br/>
+<%= text_field 'sample_origin', 'cell_cycle_phase'  %></p>
+
+<p><label for="sample_origin_technique">Technique</label><br/>
+<%= text_field 'sample_origin', 'technique'  %></p>
+
+<p><label for="sample_origin_metabolic_label">Metabolic label</label><br/>
+<%= text_field 'sample_origin', 'metabolic_label'  %></p>
+
+<p><label for="sample_origin_created_on">Created on</label><br/>
+<%= datetime_select 'sample_origin', 'created_on'  %></p>
+
+<p><label for="sample_origin_updated_on">Updated on</label><br/>
+<%= datetime_select 'sample_origin', 'updated_on'  %></p>
+<!--[eoform:sample_origin]-->
+

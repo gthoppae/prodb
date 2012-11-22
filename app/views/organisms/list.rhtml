@@ -1,0 +1,83 @@
+
+<% if @organisms.length.zero? %>
+
+	<h4>No organisms found in the database. <%= link_to "Create one", :action => "new" %>
+
+<% else %>
+
+<h2>Listing organisms</h2>
+
+<div id="actions">
+Actions: <%= link_to 'New organism', :action => 'new' %>
+</div>
+<br/>
+
+<div id="pages_nav">
+<center>Pages:
+
+<% (1..(Organism.count.to_i/20.0).ceil.to_i).to_a.each do |i| %>
+  <% if params[:page] and params[:page].to_i == i -%>
+    <span class="current-page">
+      <a href="/organisms?page=<%= i -%>"><%= i -%></a>
+    </span>&nbsp;
+  <% else -%>
+    <span class="pages">
+      <a href="/organisms?page=<%= i -%>"><%= i -%></a>
+    </span>&nbsp;
+  <% end %>
+<% end %>
+</center>
+
+</div>
+
+<br/>
+
+
+<table class="table-with-border" border="0" cellpadding="4" cellspacing="0" align="center">
+  <tr class="header">
+		<th>#</th>
+    <th>Species</th>
+		<th>Strain</th>
+		<th>Genotype</th>
+		<th>Annotation</th>
+		<th>Created on</th>
+		<th>&nbsp;</th>
+  </tr>
+  
+<% @organisms.each_with_index do |organism, index| %>
+	<tr<%= ' class="odd"' if index%2 == 1 %>>
+		<td><a href="/organisms/show/<%= organism.id %>"><%= organism.id %></a></td>
+    <td><%=h organism.species_name %></td>
+    <td><%=h organism.strain_identifier %></td>
+    <td><%=h organism.relevant_genotype %></td>
+    <td><%=h organism.annotation %></td>
+    <td><%=h organism.created_on.strftime( "%d-%m-%Y" )  %></td>
+    <td><%= link_to( image_tag('edit.gif', :border => 0), :action => 'edit', :id => organism) %> &nbsp;
+    <%= link_to (image_tag('trash.gif', :border => 0),  {:action => 'destroy', :id => organism}, :confirm => "Are you sure?") %> </td>
+		</td>
+  </tr>
+<% end %>
+</table>
+
+
+<br />
+
+
+
+<% if @paginate %>
+  <div style="text-align: center">
+		<%= will_paginate @organisms %>
+  </div>
+<% else %>
+
+Navigation should appear here
+<% end %>
+
+<br/>
+
+<div id="actions">
+Actions: <%= link_to 'New organism', :action => 'new' %>
+</div>
+<br/>
+
+<% end %>

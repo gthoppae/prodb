@@ -1,0 +1,58 @@
+
+<%= error_messages_for 'upload' %>
+
+<div style="text-align: center; margin-left: auto; margin-right: auto; padding: 20px; margin-top: 20px; border: 2px solid #030;; background: #eee; width: 50%; ">
+
+<% if @controller.controller_name == "experiments" %>
+<%= form_tag( {:action => 'new', :controller => 'uploads'}, :multipart => true ) %>
+<% else %>
+<%= form_tag( {:action => 'update', :controller => 'uploads'}, :multipart => true ) %>
+<% end %>
+
+<%= hidden_field_tag( 'upload_id', @upload.id  ) %>
+<%= hidden_field_tag( 'last_controller', 'experiments' ) %>
+<%= hidden_field_tag( 'last_action', 'show' ) %>
+<%= hidden_field_tag( 'last_id', @experiment.id ) %>
+<table border=0>
+		<tr>
+			<td>File:
+			<% if @controller.controller_name == "experiments" %>
+			<td align="left"><%= file_field('upload', 'file') %></td>
+			<% else %>
+			<td align="left"><%= @upload.filename  %></td>
+			<% end %>
+		</tr>
+		<tr>
+			<td>Source:</td>
+			<td align="left">
+					<% if @controller.controller_name == "experiments" %>
+							<%= radio_button_tag( "upload[tag_list][]", "lab") %> Lab
+							<%= radio_button_tag( "upload[tag_list][]", "customer") %> Customer
+					<% else %>
+						<% if @upload.tag_list[0] == "lab" %>
+							<%= radio_button_tag( "upload[tag_list][]", "lab", true ) %> Lab
+							<%= radio_button_tag( "upload[tag_list][]", "customer" ) %> Customer
+						<% else %>
+							<%= radio_button_tag( "upload[tag_list][]", "customer", true ) %> Customer
+							<%= radio_button_tag( "upload[tag_list][]", "lab" ) %> Lab
+						<% end %>
+					<% end %>
+			</td>
+		</tr>
+		<tr>
+			<td>Description:</td>
+			<td><%= text_area( 'upload', 'description', {:rows=>8, :cols=>40} ) %></td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+      <% if @controller.controller_name == "experiments" %>
+			<td><%= submit_tag( 'Upload' ) %></td>
+			<% else %>
+			<td><%= submit_tag( 'Update' ) %></td>
+			<% end %>
+		</tr>
+</table>
+
+</form>
+</div>
+

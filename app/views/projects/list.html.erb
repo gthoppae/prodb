@@ -1,0 +1,84 @@
+
+<% if @projects.length == 0 %>
+
+	<%= render :partial => 'empty' %>
+
+<% else %>
+
+<h2>Listing projects (Total: <%=h Project.count -%>)</h2>
+
+<div id="actions">
+Actions: <%= link_to 'New project', :action => "new" %>
+</div>
+<br/>
+
+<center>
+<%= will_paginate @projects %>
+</center>
+
+
+<br/>
+
+<table class="table-with-border" border="0" cellpadding="4" cellspacing="0" width="80%" align="center">
+  <tr class="header">
+	 <th class="left">No</th>
+		<th>Project name</th>
+		<th>Experiments</th>
+		<th>Created on</th>
+	<th colspan="3">&nbsp;</th>
+  </tr>
+  
+<% @projects.each_with_index do |project, index| %>
+  <tr<%= ' class="odd"' if index%2 == 0 %>>
+		<% if params[:page] -%>
+		<td><%=h index+(20*(params[:page].to_i-1))+1 %></td>
+		<% else -%>
+		<td><%=h index+1 %></td>
+		<% end -%>
+		<td><a href="/projects/show/<%= project.id %>"><%=h project.name %></a></td>
+		<td><%=h project.experiments.length%></a></td>
+    <td class="centered"><%=h project.human_created_on  %></td>
+    <td colspan="3">
+    <%= link_to( image_tag('edit.gif', :border => 0), :action => 'edit', :id => project , :controller => 'projects') %> &nbsp;
+    <%= link_to( image_tag('trash.gif', :border => 0), {:action => 'destroy', :id => project, :controller => 'projects'}, :confirm => "
+WARNING
+
+This will delete all the experiments (#{project.experiments.length}), samples and uploads that belong to this project.
+
+Are you sure?") %> </td>
+  </tr>
+<% end %>
+</table>
+
+<br/>
+
+
+
+<div id="actions">
+Actions: <%= link_to 'New project', :action => "new" %><br/>
+</div>
+<br/>
+
+
+<!--
+<h2>Create new project</h2>
+<div> 
+<%= form_tag :url=> { :action => "create_ajax" },
+										:update => "projects-list",
+										:position => "bottom",
+										:effects => 'highlight',
+										:loading => "project.reset()",
+										:html => { :id => 'project-form', :name => 'project' } %>
+
+<p>
+  Name: 
+	<%= text_field 'project', 'name' %>
+	<input type="submit" value="Create">
+</p>
+
+</form>
+
+</div>
+-->
+
+<% end %>

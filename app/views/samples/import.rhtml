@@ -1,0 +1,9 @@
+<%= @samples.inspect %>
+
+<table>
+<% form_for :sample do |f| %>
+	<% @samples.each do |s| %>
+		<%= render :partial => 'import_form', :locals => { :f => f, :s => s } %>
+	<% end %>
+<% end %>
+</table>

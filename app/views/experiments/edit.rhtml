@@ -1,0 +1,9 @@
+<h1>Editing experiment</h1>
+
+<% form_for :experiment, @experiment, :url => { :action => 'update', :id => @experiment } do |f| %>
+  <%= render_partial "form", :locals => { :f => f } %>
+  <%= submit_tag "Update" %>
+<% end %>
+
+<%= link_to 'Show', :action => 'show', :id => @experiment %> |
+<%= link_to 'Back', :action => 'list' %>

@@ -1,0 +1,49 @@
+<table class="table-with-border" border='0' cellpadding="4" cellspacing="0" width="100%">
+	<thead>
+  <tr class="header">
+		<th>Sample ID</th>
+		<th>Sample Name</th>
+		<th>Sample Date</th>
+		<th>Provider</th>
+		<th>Description</th>
+		<th>Annotation</th>
+		<th>Stain</th>
+		<th>Analysis type</th>
+		<th>Bill done?</th>
+		<th>Mascot</th>
+<% if @controller.controller_name == "experiments" -%>
+		<th>&nbsp;</th>
+<% end %>
+  </tr>
+	<tbody>
+  
+<% experiment.samples.each_with_index do |sample, index| %>
+	<tr<%= ' class="odd"' if index%2 == 1 %> id="<%= sample.id %>">
+		<td>
+		<%=h sample.id%></td>
+		<td><%=h sample.sample_name %></td>
+    <td><% if not sample.sample_date.nil? %><%=h sample.sample_date.strftime( "%d-%m-%Y"  ) %><% end %></td>
+    <td><% if (Person.find_by_last_name( sample.provider ).nil?) -%>
+				<%= link_to(sample.provider + "?", :controller => 'samples', :action => 'edit', :id => sample) %>
+			<% else -%>
+				<%= sample.provider %>
+			<% end -%>
+	</td>
+    <td><%=h sample.description%></td>
+    <td><%=h sample.annotation %></td>
+    <td><% if not sample.stain == "0" %><%=h sample.stain %><%end%></td>
+    <td><% if not sample.analysis_type == "0" %><%=h sample.analysis_type %><%end%></td>
+    <td><%=h sample.bill_done %></td>
+		<% if not sample.mascot_search_results.nil? %>
+		<td><%= sample.mascot_search_results.split(',').collect { |f| f=~/F0(\d+)/; "<a href='#{f}'>#{$1}</a>" }.join(', ') %></td>
+		<% else %>
+		<td>&nbsp;</td>
+		<% end %>
+
+<% if @controller.controller_name == "experiments" -%>
+    <td><%= link_to( image_tag('edit.gif', :border => 0), :action => 'edit', :id => sample, :controller => 'samples') %> &nbsp;
+    <%= link_to (image_tag('trash.gif', :border => 0),  {:action => 'destroy', :controller => "samples", :id => sample}, :confirm => "Are you sure?") %> </td>
+<% end -%>
+  </tr>
+<% end %>
+</table>

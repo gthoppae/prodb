@@ -1,0 +1,22 @@
+
+	<tr>
+		<td><%=  f.text_field  s.sample_name %></td>
+	
+		<!-- if the provider is not found in the database, give a drop down -->
+		<% if Person.find(:all, :conditions => [ "first_name = ? OR last_name = ?", s.provider, s.provider ]) %>
+		<td>
+<%= select("sample", "provider", Person.find( :all, :order => 'last_name').collect { |n| [n.last_name] } ) %>
+		</td>
+
+		<% else %>
+		<td><%=  s.provider %> not found</td>
+		<td><%=  f.text_field  s.provider, :value => s.provider %></td>
+		<% end %>
+
+		<td><%=  f.text_area s.annotation, :value => s.annotation, :cols => 10, :rows => 4 %></td>
+		<td><%=  f.text_area s.description, :value => s.description, :cols => 10, :rows => 4 %></td>
+		<td><%=  f.text_field s.stain, :value => s.stain, :size => 5 %></td>
+		<td><%=  f.text_field s.analysis_type, :value => s.analysis_type, :size => 5 %></td>
+		<td><%=  f.text_field s.bill_done, :value => s.bill_done, :size => 5%></td>
+
+	</tr>

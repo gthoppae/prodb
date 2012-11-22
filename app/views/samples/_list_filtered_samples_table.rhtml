@@ -1,0 +1,21 @@
+<div id="samples-table">
+
+<table class="table-with-border" border='0' cellpadding="4" cellspacing="0" align="center" width="95%">
+	<thead>
+		<%= render :partial => 'samples_table_header' %>
+	</thead>
+
+
+	<tbody>
+  
+
+		<% experiment.samples.each_with_index do |sample, index| %>
+			<% if sample.provider == params[:sample][:provider] %>
+			<%= render :partial => 'samples_table_row', :locals => { :sample => sample , :index => index} %>
+			<% end %>
+		<% end %>
+
+</tbody>
+</table>
+
+</div>

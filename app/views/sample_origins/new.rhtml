@@ -1,0 +1,8 @@
+<h1>New sample_origin</h1>
+
+<% form_for :sample_origin, :url => { :action => 'create' } do |f| %>
+  <%= render :partial => "form", :locals => {:f => f} %>
+  <%= submit_tag "Create" %>
+<% end %>
+
+<%= link_to 'Back', :action => 'list' %>

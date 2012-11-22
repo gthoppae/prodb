@@ -1,0 +1,20 @@
+
+<h1>Search the database</h1>
+
+<div style="border: 1px solid #bbb; padding: 5px; text-align: center; width: 500px; margin: auto;"/>
+  <%= form_remote_tag( :html => { :id=> "search_form", :action => url_for(:controller=> "experiments", :action => "list_filtered") }, :update => "experiments-table" ) -%>
+  Filter on  <select name="field">
+								<%= options_for_select( [
+																		['Project name', 'project'],
+																		['Experiment hypothesis', 'experiment'],
+																	 ] ) %>
+							</select>
+  for text:: <%= text_field_tag("keyword") -%>
+
+<%= observe_form( "search_form",
+ 	:frequency => 0.5,
+	:update => "experiments-table",
+	:url => { :action => 'list_filtered'},
+	:submit => 'search_form' ) %>
+
+</div>

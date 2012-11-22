@@ -1,0 +1,16 @@
+<form action="/uploads/upload" method="post" enctype="multipart/form-data">
+
+<table>
+	
+	<tr>
+		<td class="label-td">Upload a file:</td>
+		<td><input type="file" name="upload[file]" /></td>
+		<td><input type="submit" name="Save" /></td>
+    <td><%= link_to( image_tag('edit.gif', :border => 0), :action => 'edit', :id => sample ) %> &nbsp;
+    <%= link_to (image_tag('trash.gif', :border => 0),  {:action => 'destroy', :id => sample}, :confirm => "Are you sure?") %> </td>		
+		
+	</tr>
+
+</table>
+
+</form>

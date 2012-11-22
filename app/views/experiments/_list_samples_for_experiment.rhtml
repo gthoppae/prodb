@@ -1,0 +1,61 @@
+<table class="table-with-border" id="samples-table" border='0' cellpadding="4" cellspacing="0" width="100%">
+	<thead>
+  <tr class="header">
+		<th><input type="checkbox" name="select_all_or_none" id="select_all_or_none" onclick="selectAllNone(this.checked);"></th>
+		<th>Sample ID</th>
+		<th>Sample Name</th>
+		<th>Sample Origin</th>
+		<th>Sample Date</th>
+		<!-- <th>Sample Origin</th> -->
+		<th>Provider</th>
+		<th>Description</th>
+		<th>Annotation</th>
+		<th>Stain</th>
+		<th>Analysis type</th>
+		<th>Bill done?</th>
+		<th>Mascot</th>
+<% if @controller.controller_name == "experiments" -%>
+		<th>&nbsp;</th>
+<% end %>
+  </tr>
+	<tbody>
+
+	<%= render :partial => "manage_samples_fields" %>
+  
+<% experiment.samples.each_with_index do |sample, index| %>
+	
+	<tr<%= ' class="odd"' if index%2 == 1 %> id="<%= sample.id %>">
+		<td><input type="checkbox" id="sample_selected_sample", name="sample[selected_sample][]", value="<%= sample.id%>" onclick="if(this.checked){ this.checked = 1; selectedSamplesNo(); 
+} else { selectedSamplesNo(); 
+ }"></td> 
+		<td width="5%">
+		<%=h sample.id%></td>
+		<td><%=h sample.sample_name %></td>
+		<td><%=h sample.sample_origin.nil? ? '' : sample.sample_origin.organism.species_name%></td>
+    <td><%=h sample.sample_date.nil? ? '' : sample.sample_date.strftime( "%d-%m-%Y" ) %></td>
+    <!-- <td><%=h sample.sample_origin.nil? ? '' : sample.sample_origin.description %></td> -->
+
+    <td><% if (Person.find_by_last_name( sample.provider ).nil?) -%>
+				<%= link_to(sample.provider + "?", :controller => 'samples', :action => 'edit', :id => sample) %>
+			<% else -%>
+				<%= sample.provider %>
+			<% end -%>
+	</td>
+    <td><%=h sample.description%></td>
+    <td><%=h sample.annotation %></td>
+    <td><% if not sample.stain == "0" %><%=h sample.stain %><%end%></td>
+    <td><% if not sample.analysis_type == "0" %><%=h sample.analysis_type %><%end%></td>
+    <td><%=h sample.bill_done.nil? ? '' : sample.bill_done.upcase %></td>
+		<% if not sample.mascot_search_results.nil? %>
+		<td><%= sample.mascot_search_results.split(',').collect { |f| f=~/F0(\d+)/ ? "<a href='#{f}'>#{$1}</a>" : f }.join(', ') %></td>
+		<% else %>
+		<td>&nbsp;</td>
+		<% end %>
+
+<% if @controller.controller_name == "experiments" -%>
+    <td><%= link_to( image_tag('edit.gif', :border => 0), :action => 'edit', :id => sample, :controller => 'samples') %> &nbsp;
+    <%= link_to (image_tag('trash.gif', :border => 0),  {:action => 'destroy', :controller => "samples", :id => sample}, :confirm => "Do you really want to delete (#{sample.sample_name}) ?") %> </td>
+<% end -%>
+  </tr>
+<% end %>
+</table>

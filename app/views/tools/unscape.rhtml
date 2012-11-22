@@ -1,0 +1,15 @@
+<div id="box">
+
+<h2>Unescape HTML encoded string</h2>
+<%= form_remote_tag :url => { :controller => "tools", :action => "unescape" } %>
+	Paste the cryptic code below: <br/>
+	<textarea name="text" cols="70" rows="5">title=File%3a%20060306_BJ_QS_PIDD_NUCL_CTRL_1%2ewiff%2c%20Sample%3a%20060306_BJ_QS_PIDD_NUCL_CTRL_1%20%28sample%20number%201%29%2c%20Elution%3a%2035%2e95%20to%2036%2e33%20min%2c%20Period%3a%201%2c%20Cycle%28s%29%3a%205820%2d5823%2c%205831%2d5834%20%28Experiment%202%29</textarea><br/>
+	<input type="submit" value="unescape"/>
+</form>
+
+</div>
+
+<div id="result-box" style="display:none; width: 400px; background-color: #eee;">
+	<h4>Result</h4>
+	<div id="result" style="width: 98%;"></div>
+</div>

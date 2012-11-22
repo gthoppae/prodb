@@ -1,0 +1,22 @@
+xml.instruct! :xml, :version=>"1.0" 
+    xml.comment!('Begin experiment')      
+    xml.experiment(:id => @experiment.id) {         
+      xml.hypothesis(@experiment.hypothesis)
+      xml.annotation(@experiment.annotation)        
+      xml.created_on(@experiment.created_on)        
+      xml.updated_on(@experiment.updated_on)                
+      #sample
+    
+      xml.samples { 
+        #iterate over samples
+        @experiment.samples.each do |s|
+          xml.sample(:id => s.id) {           
+            xml.name(s.sample_name)
+            xml.sample_date(s.sample_date)
+            #xml.description(s.description)     
+            xml.annotation(s.annotation)                               
+          }            
+        end
+			}
+		}
+

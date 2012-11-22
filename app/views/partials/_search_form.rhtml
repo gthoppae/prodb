@@ -1,0 +1,11 @@
+<div style="border: 1px solid #bbb; padding: 5px; text-align: center; width: 400px; margin: auto;"/>
+  <%= form_remote_tag( :html => { :action => url_for(:controller=> @controller , :action => "list_filtered") }, :update => "experiments-table" ) -%>
+  Filter on Project name: <%= text_field_tag("keyword") -%>
+
+<%= observe_field(:keyword,
+:frequency => 0.5,
+:update => "experiments-table",
+:url => { :action => 'list_filtered'},
+:with => "'keyword='+escape(value)") %>
+
+</div>

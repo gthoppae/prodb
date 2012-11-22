@@ -1,0 +1,81 @@
+<!-- box for experiment -->
+<div style="border: 1px solid #bbb; padding: 10px; margin-top: 10px; background: <%= @background %>;">
+
+<!-- begin experiment -->
+<div id="box">
+    <% if @controller.controller_name == "projects" -%>
+		<h2><a href="/experiments/show/<%= @experiment.id %>">Experiment No: <%= @i+1 %></a></h2>
+		<% else -%>
+		<h2>Experiment</h2>
+		<% end -%>
+
+<table> 
+	<tr><td><span class="label-td">Experiment ID:</span> <%= @experiment.id %>
+	</td></tr>
+	<tr><td><span class="label-td">Hypothesis:</span>
+	<%= @experiment.hypothesis %></tr>
+	<tr><td><span class="label-td">Annotation:</span>
+	<%= @experiment.annotation %></tr>
+	<tr><td><span class="label-td">Created on</span>
+	<%= @experiment.human_created_on %></tr>
+</table>
+</div>
+<!-- end experiment -->
+
+
+<!-- begin samples -->
+<div id="box">
+
+<h2>Samples</h2>
+<% if not @experiment.samples.empty? 	%>
+	<%= render :partial => "partials/list_samples_for_experiment", :locals => { :experiment => @experiment } %>
+  <br/>
+<% else %>
+	No samples found for this experiment.
+  <br/>
+  <br/>
+<% end %>
+
+<% if @controller.controller_name == "experiments" -%>
+
+<input type="button" value="New Sample" onClick="window.location='/samples/new/<%= params['id'] %>';"/>
+<input type="button" onclick="new Effect.BlindDown('import');" value=" Import Samples" />
+<a href="/SAMPLE_LIST_180208.xls">SAMPLE_LIST_180208.xls</a>	</td> 
+<%= render :partial => "partials/import_form" %>
+
+<% end -%>
+
+</div>
+<!-- end samples -->
+
+<br/>
+
+<!-- begin results -->
+<div id="box">
+
+<h2>Experimental results</h2>
+	<% if not @experiment.uploads.empty? 	%>
+		<%= render :partial => "partials/list_results_for_experiment" %>
+	<% else %>
+		<div id="error">No results found for this experiment.</div>
+		<br/>
+	<% end %>
+
+<% if @controller.controller_name == "experiments" -%>
+		<input type="button" value="New Result" onClick="Effect.BlindDown('upload');">
+		<div id="upload" style="display: none;">
+		<h1 align="center">Upload experimental results</h1>
+		<% @upload = Upload.new %>
+		<%= render :partial => "partials/upload_form" %>
+
+		<br/>
+		<center><input type="button" onclick="new Effect.BlindUp('upload');" value=" Cancel" /></td></center>
+
+		</div>
+<% end -%>
+</div>
+<!-- end results -->
+
+</div>
+<!-- end box for experiment -->
+

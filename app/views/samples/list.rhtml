@@ -1,0 +1,60 @@
+<% if @samples.length.zero? %>
+	<h4>No samples found in the database. <%= link_to "Create one", :action => 'new' %>	</h4>
+<% else %>
+
+<div id="error"><%= flash.now[:notice] %></div>
+<h1>Listing samples sorted by sample date</h1>
+
+<div id="actions">Actions: <%= link_to 'New sample', :action => 'new' %></div>
+<br/>
+
+<div style="border: 1px solid #bbb; padding: 5px; text-align: center; width: 500px; margin-left: auto; margin-right: auto;"/>
+
+  <%= form_remote_tag( 	:html => { :id=> "search_form" }, 
+												:url => { :controller => 'samples', :action => 'list_filtered' }, 
+ 												:update => "samples-container" ) -%>
+
+
+	<input type="hidden" id="row_count" name="row_count" value="1" />
+
+	<div id="search_field">
+  Filter on <select id="filter_field" name="field">
+                <%= options_for_select( [
+                                    ['Sample Provider', 'provider']
+                                   ] ) %>              </select>
+	for		<%= select("sample", "provider", Person.find( :all, :order => 'last_name').collect { |n| [n.last_name] }, :include_blank => true ) %>
+
+<% observe_form( "search_form",
+  :frequency => 0.5,
+  :update => "samples-table",
+  :url => { :action => 'list_filtered'},
+  :submit => 'search_form' ) %>
+
+	<%= submit_tag( "filter" ) %>
+
+	 <% link_to_function image_tag('silk_icons/add.png', {:border => 'none'}) do |page|
+		page.insert_html :bottom, :search_field, :partial => 'search_field'
+	 end %>
+
+	</div>
+
+</div>
+<br/>
+
+
+<center>
+  <%= will_paginate @samples, :id => 'pagination' %>
+</center>
+<br/>
+
+
+
+<div id="samples-container">
+<%= render :partial => 'samples_table', :locals => { :samples => @samples } %>
+</div>
+
+
+<br />
+
+<% end %>
+

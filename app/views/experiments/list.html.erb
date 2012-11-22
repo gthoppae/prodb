@@ -1,0 +1,62 @@
+<% if Experiment.count == 0 %>
+
+	<h4>No experiments found in the database. <%= link_to "Create one" , :action => 'new' %></h4>
+
+<% else %>
+
+<% if @only_table %>
+	<%= render :partial => "list_experiments", :locals => { :keyword => params[:keyword] } %>
+<% else %>
+
+<h2>Listing experiments (Total: <%= Experiment.count -%>)</h2>
+
+<div id="actions">
+  Actions: <%= link_to 'New Experiment', {:action => "new"}, { :id => 'modal' } %> ::
+  <%= link_to 'Export to Excel', :action => 'export'%>
+</div>
+
+
+<br/>
+
+
+<div style="border: 1px solid #bbb; padding: 5px; text-align: center; width: 500px; margin: auto;"/>
+  <%= form_remote_tag( 	:html => { :id => 'search_form' }, :update => "experiments-table",
+:url => { :action => "experiments/list_filtered" } 
+) %>
+  Filter on  <select name="field">
+                <%= options_for_select( [
+                                    ['Project', 'project'],
+                                    ['Experiment', 'experiment'],
+                                   ] ) %>
+              </select>
+  for text:: <%= text_field_tag("keyword") -%>
+
+<%= observe_form( "search_form",
+ 	:frequency => 0.5,
+	:update => "experiments-table",
+	:url => { :action => 'list_filtered'},
+	:submit => 'search_form' ) %>
+
+</div>
+<br/>
+
+
+<center>
+	<%= render :partial => 'list_experiments', :locals => { :keyword => params[:keyword], :experiments => @experiments }  %>
+</center>
+
+<br/>
+
+
+<div id="actions">
+Actions: <%= link_to 'New experiment', :action => 'new' %> ::
+<%= link_to 'Export to Excel', :action => 'export'%>
+</div>
+
+<br/>
+
+</form>
+
+<% end %> <!-- if experiments are found in the database -->
+
+<% end %>

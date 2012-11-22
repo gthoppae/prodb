@@ -1,0 +1,56 @@
+
+<% @samples.group_by(&:experiment).keys.each_with_index do |e, i| %>
+		<b>Experiment <%= i+1 %>: <%= link_to e.hypothesis, "experiments/show/#{e.id}"%>
+		<br/>
+		
+			<%= render 	:partial => 'partials/list_samples_for_experiment', 
+									:locals => { 'experiment' => e } %>
+
+
+<% end %>
+
+<table  border='0' cellpadding="4" cellspacing="0" style="border: 1px dotted #bbb;">
+<thead>
+	<tr class="header" style="font-size: x-small; border: 1px solid #000;">
+    <th>No</th>
+    <th>Sample ID</th>
+    <th>Sample Name</th>
+    <th>Date</th>
+    <th>Analysis type</th>
+    <th>Stain</th>
+    <th>Description</th>
+    <th>Annotation</th>
+  </tr>
+</thead>
+
+	<tbody>
+
+
+	<% @samples.group_by(&:experiment).keys.each_with_index do |e, i| %>
+
+
+
+<tr class="odd">
+		<td colspan="9"><b>Experiment <%= i+1 %>: <%= link_to e.hypothesis, "experiments/show/#{e.id}"%></td>
+</tr>
+
+		<% e.samples.each_with_index do |s, ii| %>
+
+			<tr style="border: 1px solid #f00;">
+
+			<td style="border: 1px solid #bbb; border-right: 1px solid #bbb;"><%= ii+1 %></td>
+			<td style="border-right: 1px solid #bbb;"><%=h s.id %></td>
+			<td style="border-right: 1px solid #bbb;"><%=h s.sample_name %></td>
+    	<td style="border-right: 1px solid #bbb;"><%=h s.sample_date.strftime( "%d-%m-%Y" ) %></td>
+			<td style="border-right: 1px solid #bbb;"><%=h s.analysis_type %></td>
+			<td style="border-right: 1px solid #bbb;"><%=h s.stain %></td>
+    	<td style="border-right: 1px solid #bbb;"><%=h s.description %></td>
+			<td style="border-right: 1px solid #bbb;"><%=h s.annotation %></td>
+		</tr>
+		<% end %> <!-- samples -->
+
+		<% end %>
+
+	</tbody>
+</table>
+

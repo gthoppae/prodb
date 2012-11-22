@@ -1,0 +1,65 @@
+<div id="experiments-table">
+
+<!-- if there are hits found -->
+
+<% if request.post? %>
+	<% if not params['keyword'].empty?  %>
+	Found <%= @experiments.length%> experiments 
+	<% if @experiments.page_count > 50 %>
+		, listing first 50 hits
+	<% end %>
+	<br/>
+  <% end %>
+<% end %>
+
+<br/>
+	<%= will_paginate @experiments %>
+<br/>
+
+<% if @experiments.page_count > 0 %>
+
+<table class="table-with-border" border="0" cellpadding="4" cellspacing="0" width="100%">
+  <tr class="header">
+	 <th class="left">No</th>
+		<th>Project name</th>
+		<th>Exp Hypothesis</th>
+		<th>Annotation</th>
+	<th colspan="2">&nbsp;</th>
+  </tr>
+  
+<% @experiments.each_with_index do |experiment, index| %>
+  <tr<%= ' class="odd"' if index%2 == 0 %>>
+		<td><%=h index+1 %></td>
+		<% if experiment.project.nil? %>
+		<td style="color: #bbb;">Orphan project; assign one</td>
+		<% else %>
+		<td><a  href="/projects/show/<%=h experiment.project.id %>"><%=h experiment.project.name %></a>
+		<% end %>
+
+    <td><%= link_to highlight(experiment.hypothesis, keyword), :id => experiment.id, :action => "show" %> 
+				<div style="font-size: x-small; color: #885;"><%= time_ago_in_words(experiment.created_on)%> ago and has (<%= experiment.uploads.length %>) attachments</div>
+		</td>
+
+		<% if not request.post? %>
+    <td><%= experiment.annotation  %></td>
+		<% else %>
+    <td><%= highlight(experiment.annotation, keyword) %></td>
+		<% end %>
+    <td colspan="2" width="5%">
+    <%= link_to( image_tag('edit.gif', :border => 0), :action => 'edit', :id => experiment, :controller => 'experiments') %> &nbsp;
+    <%= link_to( image_tag('trash.gif', :border => 0), {:action => 'destroy', :id => experiment, :controller => 'experiments'}, :confirm => "
+WARNING
+
+This will delete all the samples (#{experiment.samples.length}) and uploaded files (#{experiment.uploads.length}) that belong to this experiment.
+
+Are you sure?") %> </td>
+  </tr>
+<% end %>
+</table>
+
+
+<!-- else, don't display the table-->
+<% else %>
+	
+<% end %>
+</div>

@@ -1,0 +1,8 @@
+<% if @results.empty? %> 
+'<%=h @phrase %>' not found! 
+<% else %> 
+'<%=h @phrase %>' found in 
+<pre style="font-size: 10pt;">
+<%= highlight(@results, @phrase) %> 
+</pre>
+<% end %> 

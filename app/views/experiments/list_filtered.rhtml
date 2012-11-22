@@ -1,0 +1,53 @@
+<div id="experiments-table">
+
+
+<% if not params[:keyword].empty?  %>
+  Found <%= @projects.page_count%> projects
+  <% if @projects.page_count > 50 %>
+    , listing first 50 hits
+  <% end %>
+  <br/>
+<% else %>
+  <%= render :partial => "pages" %>
+<% end %>
+
+<br/>
+
+<table class="table-with-border" border="0" cellpadding="4" cellspacing="0">
+  <tr class="header">
+	 <th class="left">No</th>
+		<th>Project name</th>
+		<th>Exp Hypothesis</th>
+		<th>Annotation</th>
+	<th colspan="2">&nbsp;</th>
+  </tr>
+  
+<% @projects.each_with_index do |project, index| %>
+  <tr<%= ' class="odd"' if index%2 == 0 %>>
+    <td><%=h index+1 %></td>
+		<td colspan="4"><a  href="/projects/show/<%=h project.id %>"><%= highlight(project.name, params[:keyword]) %></a></td>
+		</td>
+	</tr>
+	<% project.experiments.each_with_index do |experiment, index2| %>
+  <tr<%= ' class="odd"' if index%2 == 0 %>>
+    <td>&nbsp;</td>
+		<td>&nbsp;</td>
+    <td width="30%"><%= link_to experiment.hypothesis, :id => experiment.id, :action => "show" %>
+				<span style="font-size: x-small; color: #885;"><%= experiment.human_created_on_short %></span>
+		</td>
+    <td width="40%"><%=h experiment.annotation %></td>
+    <td colspan="2" width="5%">
+    <%= link_to( image_tag('edit.gif', :border => 0), :action => 'edit', :id => experiment, :controller => 'experiments') %> &nbsp;
+    <%= link_to( image_tag('trash.gif', :border => 0), {:action => 'destroy', :id => experiment, :controller => 'experiments'}, :confirm => 'Are you sure?') %> </td>
+  </tr>
+  <% end %>
+<% end %>
+</table>
+
+</div>
+
+<!--
+
+<br />
+
+-->

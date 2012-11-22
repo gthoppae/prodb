@@ -1,0 +1,17 @@
+<h2>Project: <%= @project.name %></h2>
+<% if not @project.experiments.nil?  -%>
+	<% experiments = @project.experiments -%>
+	<h3><%= @project.experiments.length %> experiment(s) found in this project</h3>
+	<a href="/experiments/new">Create a new experiment</a>
+	<% experiments.each_with_index { |@experiment, @i| %>
+		<!-- begin project -->
+	<div id="project">
+		<%= render :partial => "partials/list_experiment" %>
+	</div>
+		<!-- end project -->
+	<% } -%>
+<% else -%>
+	<div id="error">There are no experiments in this project.</div>
+	( <a href="/experiments/new">Create a new experiment</a> )
+<% end -%>
+
